@@ -1,7 +1,6 @@
 package com.mdud.forum.user
 
 import com.mdud.forum.user.authority.UserAuthority
-import com.mdud.forum.user.authority.passwordEncoder
 import javax.persistence.*
 
 @Entity
@@ -16,7 +15,7 @@ class User(
         var image: String,
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-        @JoinColumn(referencedColumnName = "forum_user_id")
+        @JoinColumn(name = "forum_user_id")
         val authorities: MutableSet<UserAuthority>
 ) {
     @Id
@@ -24,9 +23,9 @@ class User(
     var id: Long? = null
 
     @Column(name = "password")
-    var password: String = passwordEncoder.encode(password)
+    var password: String = PasswordEncoder.getInstance.encode(password)
         set(value) {
-            field = passwordEncoder.encode(value)
+            field = PasswordEncoder.getInstance.encode(value)
         }
 }
 
