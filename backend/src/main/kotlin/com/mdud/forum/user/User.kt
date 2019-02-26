@@ -33,5 +33,29 @@ class User(
 
     constructor(userDTO: UserDTO)
             : this(userDTO.username, userDTO.password, userDTO.image, mutableSetOf(UserAuthority(Authority.USER)))
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as User
+
+        if (username != other.username) return false
+        if (image != other.image) return false
+        if (authorities != other.authorities) return false
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = username.hashCode()
+        result = 31 * result + image.hashCode()
+        result = 31 * result + authorities.hashCode()
+        result = 31 * result + (id?.hashCode() ?: 0)
+        return result
+    }
+
+
 }
 
