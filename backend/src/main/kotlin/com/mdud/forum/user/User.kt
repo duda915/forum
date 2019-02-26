@@ -1,5 +1,6 @@
 package com.mdud.forum.user
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.mdud.forum.user.authority.UserAuthority
 import javax.persistence.*
 
@@ -22,6 +23,7 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
+    @JsonIgnore
     @Column(name = "password")
     var password: String = PasswordEncoder.getInstance.encode(password)
         set(value) {
