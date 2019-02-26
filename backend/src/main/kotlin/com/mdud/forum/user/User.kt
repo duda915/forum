@@ -29,3 +29,4 @@ class User(
             field = passwordEncoder.encode(value)
         }
 }
+
