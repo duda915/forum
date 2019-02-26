@@ -1,6 +1,7 @@
 package com.mdud.forum.user
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.mdud.forum.user.authority.Authority
 import com.mdud.forum.user.authority.UserAuthority
 import javax.persistence.*
 
@@ -29,5 +30,8 @@ class User(
         set(value) {
             field = PasswordEncoder.getInstance.encode(value)
         }
+
+    constructor(userDTO: UserDTO)
+            : this(userDTO.username, userDTO.password, userDTO.image, mutableSetOf(UserAuthority(Authority.USER)))
 }
 
