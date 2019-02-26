@@ -18,15 +18,20 @@ class UserServiceImpl @Autowired constructor(
         return userRepository.save(user)
     }
 
-    override fun removeUser(username: String): User {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun removeUser(username: String) {
+        val user = getUser(username)
+        userRepository.delete(user)
     }
 
-    override fun changePassword(username: String, newPassword: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun changePassword(username: String, newPassword: String): User {
+        val user = getUser(username)
+        user.password = newPassword
+        return userRepository.save(user)
     }
 
-    override fun setAuthorities(username: String, authorities: MutableSet<UserAuthority>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setAuthorities(username: String, authorities: MutableSet<UserAuthority>): User {
+        val user = getUser(username)
+        user.authorities = authorities
+        return userRepository.save(user)
     }
 }

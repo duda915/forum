@@ -18,7 +18,7 @@ class User(
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
         @JoinColumn(name = "forum_user_id")
-        val authorities: MutableSet<UserAuthority>
+        var authorities: MutableSet<UserAuthority>
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
