@@ -8,7 +8,7 @@ import javax.persistence.*
 @Table(name = "topic")
 data class Topic(
         @ManyToOne(cascade = [CascadeType.MERGE])
-        @JoinColumn(referencedColumnName = "original_poster")
+        @JoinColumn(name = "original_poster")
         val originalPoster: User = User(),
 
         @Column(name = "title")
@@ -22,3 +22,4 @@ data class Topic(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 }
+
