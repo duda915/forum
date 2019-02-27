@@ -1,5 +1,6 @@
 package com.mdud.forum.topic
 
+import com.mdud.forum.exception.AccessDeniedException
 import com.mdud.forum.topic.post.Post
 import com.mdud.forum.user.User
 import com.mdud.forum.user.UserService
@@ -132,5 +133,54 @@ class TopicServiceImplTest {
         val expectedTopic = Topic(user, "title", mutableListOf(secondPost))
         assertEquals(expectedTopic, topic)
         verify(topicRepository, times(1)).save(expectedTopic)
+    }
+
+    @Test
+    fun editTopic() {
+        `when`(topicRepository.findById(1)).thenReturn(Optional.of(topic))
+        `when`(topicRepository.save(ArgumentMatchers.any(Topic::class.java))).then { it.getArgument(0) }
+
+        val topic = topicServiceImpl.editTopic(1, "newtitle")
+
+        val expectedTopic = Topic(user, "newtitle", mutableListOf(firstPost, secondPost))
+
+        assertEquals(expectedTopic, topic)
+        verify(topicRepository, times(1)).save(expectedTopic)
+    }
+
+    @Test
+    fun editPost_EditPostAsOriginalUser_ShouldEditPost() {
+        `when`(topicRepository.findById(1)).thenReturn(Optional.of(topic))
+        `when`(topicRepository.save(ArgumentMatchers.any(Topic::class.java))).then { it.getArgument(0) }
+        `when`(userService.getUser("user")).thenReturn(user)
+
+        val post = topicServiceImpl.editPost(1, 1, PostDTO("user", "newcontent"))
+
+        val expectedPost = Post(user, "newcontent")
+        assertEquals(expectedPost, post)
+
+        val expectedTopic = Topic(user, "title", mutableListOf(expectedPost, secondPost))
+        verify(topicRepository, times(1)).save(expectedTopic)
+
+    }
+
+    @Test(expected = AccessDeniedException::class)
+    fun editPost_EditPostAsAnotherNonModeratorUser_ShouldThrowException() {
+        val nonModerator = User("nonmod", "user", "user", mutableSetOf(UserAuthority(Authority.USER)))
+        `when`(topicRepository.findById(1)).thenReturn(Optional.of(topic))
+        `when`(topicRepository.save(ArgumentMatchers.any(Topic::class.java))).then { it.getArgument(0) }
+        `when`(userService.getUser("nonmod")).thenReturn(nonModerator)
+
+        topicServiceImpl.editPost(1, 1, PostDTO("nonmod", "newcontent"))
+    }
+
+    @Test
+    fun editPost_EditPostAsModerator_ShouldEditPost() {
+        val moderator = User("moderator", "user", "user", mutableSetOf(UserAuthority(Authority.MODERATOR)))
+        `when`(topicRepository.findById(1)).thenReturn(Optional.of(topic))
+        `when`(topicRepository.save(ArgumentMatchers.any(Topic::class.java))).then { it.getArgument(0) }
+        `when`(userService.getUser("moderator")).thenReturn(moderator)
+
+        topicServiceImpl.editPost(1, 1, PostDTO("moderator", "newcontent"))
     }
 }

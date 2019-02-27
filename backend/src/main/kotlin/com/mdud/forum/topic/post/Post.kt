@@ -11,7 +11,7 @@ data class Post(
         val poster: User = User(),
 
         @Column(name = "content")
-        val content: String = ""
+        var content: String = ""
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

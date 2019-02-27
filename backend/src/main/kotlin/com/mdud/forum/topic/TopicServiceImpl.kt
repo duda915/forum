@@ -1,7 +1,10 @@
 package com.mdud.forum.topic
 
+import com.mdud.forum.exception.AccessDeniedException
 import com.mdud.forum.topic.post.Post
 import com.mdud.forum.user.UserService
+import com.mdud.forum.user.authority.Authority
+import com.mdud.forum.user.authority.UserAuthority
 import org.springframework.beans.factory.annotation.Autowired
 import java.util.*
 
@@ -51,12 +54,25 @@ class TopicServiceImpl @Autowired constructor(
         return topicRepository.save(topic)
     }
 
-    override fun editTopic(topicId: Long, title: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun editTopic(topicId: Long, title: String): Topic {
+        val topic = getTopic(topicId)
+        topic.title = title
+
+        return topicRepository.save(topic)
     }
 
     override fun editPost(topicId: Long, postId: Long, post: PostDTO): Post {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val topic = getTopic(topicId)
+        val editPost = getPost(topicId, postId)
+        val poster = userService.getUser(post.poster)
+
+        val postToEdit = topic.posts.find { it == editPost }
+                ?.takeIf { it.poster == poster || poster.authorities.any { it.authority == Authority.MODERATOR } }
+                ?: throw AccessDeniedException("only moderator and poster can edit post")
+        postToEdit.content = post.content
+
+        topicRepository.save(topic)
+        return getPost(topicId, postId)
     }
 }
 

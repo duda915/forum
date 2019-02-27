@@ -12,7 +12,7 @@ data class Topic(
         val originalPoster: User = User(),
 
         @Column(name = "title")
-        val title: String = "",
+        var title: String = "",
 
         @OneToMany(cascade = [CascadeType.ALL])
         @JoinColumn(name = "topic_id")

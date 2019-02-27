@@ -9,6 +9,6 @@ interface TopicService {
     fun addPost(topicId: Long, post: PostDTO): Post
     fun removeTopic(topicId: Long)
     fun removePost(topicId: Long, postId: Long): Topic
-    fun editTopic(topicId: Long, title: String)
+    fun editTopic(topicId: Long, title: String): Topic
     fun editPost(topicId: Long, postId: Long, post: PostDTO): Post
 }
