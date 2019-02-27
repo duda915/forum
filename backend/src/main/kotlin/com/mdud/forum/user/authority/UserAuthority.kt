@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "user_authority")
 data class UserAuthority(
         @Enumerated(EnumType.STRING)
-        val authority: Authority
+        val authority: Authority = Authority.USER
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

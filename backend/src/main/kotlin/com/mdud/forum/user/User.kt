@@ -9,16 +9,16 @@ import javax.persistence.*
 @Table(name = "forum_user")
 class User(
         @Column(name = "username")
-        val username: String,
+        val username: String = "",
 
-        password: String,
+        password: String = "",
 
         @Column(name = "image")
-        var image: String,
+        var image: String = "",
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
         @JoinColumn(name = "forum_user_id")
-        var authorities: MutableSet<UserAuthority>
+        var authorities: MutableSet<UserAuthority> = mutableSetOf()
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

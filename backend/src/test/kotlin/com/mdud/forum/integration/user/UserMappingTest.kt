@@ -32,7 +32,7 @@ class UserMappingTest {
     @Before
     fun setup() {
         val authorities = Authority.values().map { UserAuthority(it) }.toMutableSet()
-        this.user = User("user", "password", "image", authorities)
+        this.user = User("testuser", "password", "image", authorities)
     }
 
     @Test
