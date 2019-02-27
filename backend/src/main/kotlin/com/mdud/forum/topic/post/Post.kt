@@ -17,3 +17,22 @@ data class Post(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 }
+
+@Entity
+@Table(name = "topic")
+data class Topic(
+        @ManyToOne(cascade = [CascadeType.MERGE])
+        @JoinColumn(referencedColumnName = "original_poster")
+        val originalPoster: User = User(),
+
+        @Column(name = "title")
+        val title: String = "",
+
+        @OneToMany(cascade = [CascadeType.ALL])
+        @JoinColumn(name = "topic_id")
+        val posts: MutableList<Post> = mutableListOf()
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+}
