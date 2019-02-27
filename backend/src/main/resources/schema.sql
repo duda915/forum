@@ -21,5 +21,5 @@ CREATE TABLE IF NOT EXISTS post (
   id SERIAL PRIMARY KEY,
   poster INTEGER REFERENCES forum_user(id),
   topic_id INTEGER REFERENCES topic(id),
-  content TEXT
+  content TEXT NOT NULL
 );
