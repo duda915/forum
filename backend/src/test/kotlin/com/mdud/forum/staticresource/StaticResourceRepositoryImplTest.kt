@@ -24,7 +24,7 @@ class StaticResourceRepositoryImplTest {
     @Autowired
     private lateinit var staticResourceRepository: StaticResourceRepository
 
-    lateinit var content:String
+    lateinit var content: String
     lateinit var path: StaticResourcePath
 
     @Before
