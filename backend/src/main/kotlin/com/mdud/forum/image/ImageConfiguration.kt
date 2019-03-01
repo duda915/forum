@@ -14,4 +14,9 @@ class ImageConfiguration @Autowired constructor(
     fun imageInitializer(): ImageInitializer {
         return ImageInitializer(variables)
     }
+
+    @Bean
+    fun imageRepository(): ImageRepository {
+        return ImageRepositoryImpl()
+    }
 }
