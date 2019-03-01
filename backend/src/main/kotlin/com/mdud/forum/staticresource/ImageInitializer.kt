@@ -2,6 +2,7 @@ package com.mdud.forum.staticresource
 
 import com.mdud.forum.configuration.Variables
 import com.mdud.forum.initializer.BaseInitializer
+import com.mdud.forum.staticresource.util.StaticResourceType
 import org.slf4j.LoggerFactory
 import java.io.File
 
@@ -11,7 +12,7 @@ class ImageInitializer(
     private val logger = LoggerFactory.getLogger(ImageInitializer::class.java)
 
     override fun initialize() {
-        val userImageDir = File("${variables.staticResourcesDir}/${variables.userImagesResourceDir}")
+        val userImageDir = File("${variables.staticResourcesDir}/${StaticResourceType.USER.name.toLowerCase()}")
         userImageDir.takeIf { !it.exists() }?.apply {
             userImageDir.mkdirs()
             logger.info("user image directory created")

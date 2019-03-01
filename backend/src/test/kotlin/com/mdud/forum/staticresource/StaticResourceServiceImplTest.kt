@@ -1,18 +1,24 @@
 package com.mdud.forum.staticresource
 
 import com.mdud.forum.configuration.Variables
+import com.mdud.forum.staticresource.util.StaticResourceLink
+import com.mdud.forum.staticresource.util.StaticResourcePath
 import com.mdud.forum.staticresource.util.StaticResourceType
+import org.hamcrest.CoreMatchers
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.*
 import org.mockito.Mockito.*
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
 @RunWith(SpringJUnit4ClassRunner::class)
+@ContextConfiguration(
+        classes = [Variables::class]
+)
 class StaticResourceServiceImplTest {
 
 
@@ -22,18 +28,19 @@ class StaticResourceServiceImplTest {
     @Mock
     lateinit var staticResourceRepository: StaticResourceRepository
 
-    @Mock
+    @Autowired
+    @Spy
     lateinit var variables: Variables
 
     @Test
     fun addStaticResource() {
         val bytes = "test".toByteArray()
-        Mockito.`when`(staticResourceRepository.save(ArgumentMatchers.any())).then { it.getArgument(0) }
+        Mockito.`when`(staticResourceRepository.save(ArgumentMatchers.any(StaticResource::class.java))).then { it.getArgument(0) }
 
-        val resource = staticResourceServiceImpl.addStaticResource(StaticResourceType.USER, bytes)
+        val link = staticResourceServiceImpl.addStaticResource(StaticResourceType.USER, bytes)
 
-        assertEquals(bytes, resource.content)
-        verify(staticResourceRepository, times(1)).save(resource)
+        assertThat(link.resourceLink, CoreMatchers.containsString("${variables.staticEndpoint}/user"))
+        verify(staticResourceRepository, times(1)).save(ArgumentMatchers.any(StaticResource::class.java))
     }
 
 

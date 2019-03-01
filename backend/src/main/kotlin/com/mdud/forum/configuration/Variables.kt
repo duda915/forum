@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Configuration
 open class Variables {
 
     val staticResourcesDir: String = "${System.getProperty("user.home")}/forum"
-    val userImagesResourceDir = "user"
+
+    val staticEndpoint = "localhost:8080/static"
 
 }
 

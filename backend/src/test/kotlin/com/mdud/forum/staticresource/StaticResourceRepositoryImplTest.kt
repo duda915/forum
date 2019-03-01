@@ -3,6 +3,7 @@ package com.mdud.forum.staticresource
 import com.mdud.forum.configuration.Variables
 import com.mdud.forum.configuration.VariablesConfiguration
 import com.mdud.forum.staticresource.util.StaticResourcePath
+import com.mdud.forum.staticresource.util.StaticResourceType
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -31,7 +32,7 @@ class StaticResourceRepositoryImplTest {
     fun setup() {
         content = "test"
         val fileName = "teststatic"
-        path = StaticResourcePath(variables, "${variables.userImagesResourceDir}/$fileName")
+        path = StaticResourcePath(variables, fileName, StaticResourceType.USER)
     }
 
     @Test

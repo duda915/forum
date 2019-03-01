@@ -5,11 +5,12 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 class StaticResourcePath (
-        private val variables: Variables,
-        val staticResourceRelativePath:String
+        val variables: Variables,
+        val fileName: String,
+        val staticResourceType: StaticResourceType
 ) {
     fun getAbsolutePath(): Path {
-        return Paths.get("${variables.staticResourcesDir}/$staticResourceRelativePath")
+        return Paths.get("${variables.staticResourcesDir}/${staticResourceType.name.toLowerCase()}/$fileName")
     }
 
     override fun equals(other: Any?): Boolean {
@@ -18,13 +19,16 @@ class StaticResourcePath (
 
         other as StaticResourcePath
 
-        if (staticResourceRelativePath != other.staticResourceRelativePath) return false
+        if (fileName != other.fileName) return false
+        if (staticResourceType != other.staticResourceType) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return staticResourceRelativePath.hashCode()
+        var result = fileName.hashCode()
+        result = 31 * result + staticResourceType.hashCode()
+        return result
     }
 
 
