@@ -10,13 +10,12 @@ import java.util.*
 
 @Service
 class StaticResourceServiceImpl @Autowired constructor(
-        private val staticResourceRepository: StaticResourceRepository,
-        private val variables: Variables
+        private val staticResourceRepository: StaticResourceRepository
 ): StaticResourceService {
 
     override fun addStaticResource(staticResourceType: StaticResourceType, byteArray: ByteArray): StaticResourceLink{
         val fileName = UUID.randomUUID().toString()
-        val staticResourcePath = StaticResourcePath(variables, fileName, staticResourceType)
+        val staticResourcePath = StaticResourcePath(fileName, staticResourceType)
         val staticResource = StaticResource(staticResourcePath, byteArray)
 
         val savedResource = staticResourceRepository.save(staticResource)

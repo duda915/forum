@@ -5,12 +5,11 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 class StaticResourcePath (
-        val variables: Variables,
         val fileName: String,
         val staticResourceType: StaticResourceType
 ) {
     fun getAbsolutePath(): Path {
-        return Paths.get("${variables.staticResourcesDir}/${staticResourceType.name.toLowerCase()}/$fileName")
+        return Paths.get("${Variables.staticResourcesDir}/${staticResourceType.name.toLowerCase()}/$fileName")
     }
 
     override fun equals(other: Any?): Boolean {

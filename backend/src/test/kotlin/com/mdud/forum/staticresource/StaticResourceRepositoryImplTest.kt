@@ -1,7 +1,5 @@
 package com.mdud.forum.staticresource
 
-import com.mdud.forum.configuration.Variables
-import com.mdud.forum.configuration.VariablesConfiguration
 import com.mdud.forum.staticresource.util.StaticResourcePath
 import com.mdud.forum.staticresource.util.StaticResourceType
 import org.junit.Assert.*
@@ -14,13 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
 @RunWith(SpringJUnit4ClassRunner::class)
 @ContextConfiguration(
-        classes = [VariablesConfiguration::class,
-            StaticResourceConfiguration::class]
+        classes = [StaticResourceConfiguration::class]
 )
 class StaticResourceRepositoryImplTest {
-
-    @Autowired
-    private lateinit var variables: Variables
 
     @Autowired
     private lateinit var staticResourceRepository: StaticResourceRepository
@@ -32,7 +26,7 @@ class StaticResourceRepositoryImplTest {
     fun setup() {
         content = "test"
         val fileName = "teststatic"
-        path = StaticResourcePath(variables, fileName, StaticResourceType.USER)
+        path = StaticResourcePath(fileName, StaticResourceType.USER)
     }
 
     @Test
