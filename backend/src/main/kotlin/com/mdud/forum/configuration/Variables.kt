@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Configuration
 
 class Variables {
 
-    val home: String = System.getProperty("user.home")
-    val userImagesResourceDir = "${home}/forum/user"
+    val staticResourcesDir: String = "${System.getProperty("user.home")}/forum"
+    val userImagesResourceDir = "user"
 
 }
 
