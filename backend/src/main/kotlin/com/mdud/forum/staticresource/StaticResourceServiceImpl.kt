@@ -18,7 +18,7 @@ class StaticResourceServiceImpl @Autowired constructor(
         return StaticResourceLink(savedResource.staticResourcePath)
     }
 
-    override fun removeStaticResource(urlPath: String) {
+    override fun removeStaticResource(resourceEndpoint: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
