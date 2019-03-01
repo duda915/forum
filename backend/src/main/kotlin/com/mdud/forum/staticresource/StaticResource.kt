@@ -1,8 +1,8 @@
-package com.mdud.forum.image
+package com.mdud.forum.staticresource
 
 import java.nio.file.Path
 
-class Image (
+class StaticResource (
         val path: Path,
         val content: ByteArray
 )

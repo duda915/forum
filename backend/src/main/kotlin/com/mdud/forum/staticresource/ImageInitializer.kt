@@ -1,4 +1,4 @@
-package com.mdud.forum.image
+package com.mdud.forum.staticresource
 
 import com.mdud.forum.configuration.Variables
 import com.mdud.forum.initializer.BaseInitializer
