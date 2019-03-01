@@ -11,7 +11,7 @@ class MvcConfig @Autowired constructor(
 ) : WebMvcConfigurer {
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("${variables.staticResourcesDir}/**")
+        registry.addResourceHandler("static/**")
                 .addResourceLocations("file:${variables.staticResourcesDir}/")
     }
 }
