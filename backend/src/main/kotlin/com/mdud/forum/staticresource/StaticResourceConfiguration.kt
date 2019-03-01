@@ -1,5 +1,6 @@
 package com.mdud.forum.staticresource
 
+import com.mdud.forum.staticresource.initializer.ImageInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

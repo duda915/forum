@@ -1,7 +1,5 @@
 package com.mdud.forum.staticresource
 
-import com.mdud.forum.staticresource.util.StaticResourcePath
-import com.mdud.forum.staticresource.util.StaticResourceType
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

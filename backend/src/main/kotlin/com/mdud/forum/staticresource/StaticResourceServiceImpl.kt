@@ -1,9 +1,5 @@
 package com.mdud.forum.staticresource
 
-import com.mdud.forum.configuration.Variables
-import com.mdud.forum.staticresource.util.StaticResourceLink
-import com.mdud.forum.staticresource.util.StaticResourcePath
-import com.mdud.forum.staticresource.util.StaticResourceType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
@@ -13,7 +9,7 @@ class StaticResourceServiceImpl @Autowired constructor(
         private val staticResourceRepository: StaticResourceRepository
 ): StaticResourceService {
 
-    override fun addStaticResource(staticResourceType: StaticResourceType, byteArray: ByteArray): StaticResourceLink{
+    override fun addStaticResource(staticResourceType: StaticResourceType, byteArray: ByteArray): StaticResourceLink {
         val fileName = UUID.randomUUID().toString()
         val staticResourcePath = StaticResourcePath(fileName, staticResourceType)
         val staticResource = StaticResource(staticResourcePath, byteArray)

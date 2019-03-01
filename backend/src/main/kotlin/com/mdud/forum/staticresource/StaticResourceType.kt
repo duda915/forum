@@ -1,4 +1,4 @@
-package com.mdud.forum.staticresource.util
+package com.mdud.forum.staticresource
 
 enum class StaticResourceType {
     USER

@@ -1,6 +1,5 @@
 package com.mdud.forum.staticresource
 
-import com.mdud.forum.staticresource.util.StaticResourcePath
 import java.nio.file.Files
 
 class StaticResourceRepositoryImpl : StaticResourceRepository {

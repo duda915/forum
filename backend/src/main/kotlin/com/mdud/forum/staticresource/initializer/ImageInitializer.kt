@@ -1,8 +1,8 @@
-package com.mdud.forum.staticresource
+package com.mdud.forum.staticresource.initializer
 
 import com.mdud.forum.configuration.Variables
 import com.mdud.forum.initializer.BaseInitializer
-import com.mdud.forum.staticresource.util.StaticResourceType
+import com.mdud.forum.staticresource.StaticResourceType
 import org.slf4j.LoggerFactory
 import java.io.File
 

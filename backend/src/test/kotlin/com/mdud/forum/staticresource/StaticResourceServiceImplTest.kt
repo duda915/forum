@@ -1,18 +1,12 @@
 package com.mdud.forum.staticresource
 
 import com.mdud.forum.configuration.Variables
-import com.mdud.forum.staticresource.util.StaticResourceLink
-import com.mdud.forum.staticresource.util.StaticResourcePath
-import com.mdud.forum.staticresource.util.StaticResourceType
 import org.hamcrest.CoreMatchers
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.*
 import org.mockito.Mockito.*
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
 @RunWith(SpringJUnit4ClassRunner::class)
