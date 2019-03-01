@@ -2,11 +2,10 @@ package com.mdud.forum.topic
 
 import com.mdud.forum.exception.AccessDeniedException
 import com.mdud.forum.topic.post.Post
+import com.mdud.forum.topic.post.PostDTO
 import com.mdud.forum.user.UserService
 import com.mdud.forum.user.authority.Authority
-import com.mdud.forum.user.authority.UserAuthority
 import org.springframework.beans.factory.annotation.Autowired
-import java.util.*
 
 class TopicServiceImpl @Autowired constructor(
         private val topicRepository: TopicRepository,

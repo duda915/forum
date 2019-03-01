@@ -1,6 +1,7 @@
 package com.mdud.forum.topic
 
 import com.mdud.forum.topic.post.Post
+import com.mdud.forum.topic.post.PostDTO
 
 interface TopicService {
     fun getTopic(id: Long): Topic

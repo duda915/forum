@@ -2,6 +2,7 @@ package com.mdud.forum.topic
 
 import com.mdud.forum.exception.AccessDeniedException
 import com.mdud.forum.topic.post.Post
+import com.mdud.forum.topic.post.PostDTO
 import com.mdud.forum.user.User
 import com.mdud.forum.user.UserService
 import com.mdud.forum.user.authority.Authority
@@ -13,7 +14,6 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import java.util.*

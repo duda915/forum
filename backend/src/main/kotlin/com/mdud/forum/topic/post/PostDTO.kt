@@ -1,4 +1,4 @@
-package com.mdud.forum.topic
+package com.mdud.forum.topic.post
 
 class PostDTO (
         val poster: String,
