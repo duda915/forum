@@ -19,7 +19,10 @@ class StaticResourceServiceImpl @Autowired constructor(
     }
 
     override fun removeStaticResource(resourceEndpoint: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val staticResourcePath = StaticResourcePath.createFromString(resourceEndpoint)
+        val staticResource = staticResourceRepository.findByPath(staticResourcePath)
+
+        staticResourceRepository.delete(staticResource)
     }
 }
 

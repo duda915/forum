@@ -32,6 +32,14 @@ class StaticResourceServiceImplTest {
 
     @Test
     fun removeStaticResource() {
+        val resourceEndpoint = "${Variables.staticEndpoint}/${StaticResourceType.IMAGE}/test"
+        val staticResourcePath = StaticResourcePath.createFromString(resourceEndpoint)
+        val staticResource = StaticResource(staticResourcePath, "test".toByteArray())
 
+        `when`(staticResourceRepository.findByPath(staticResourcePath)).thenReturn(staticResource)
+
+        staticResourceServiceImpl.removeStaticResource(resourceEndpoint)
+
+        verify(staticResourceRepository, times(1)).delete(staticResource)
     }
 }
