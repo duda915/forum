@@ -1,5 +1,7 @@
 package com.mdud.forum.staticresource
 
+import com.mdud.forum.configuration.Variables
+import com.mdud.forum.staticresource.initializer.ImageInitializer
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -24,7 +26,10 @@ class StaticResourceRepositoryImplTest {
     fun setup() {
         content = "test"
         val fileName = "teststatic"
-        path = StaticResourcePath(fileName, StaticResourceType.USER)
+        path = StaticResourcePath(fileName, StaticResourceType.IMAGE)
+
+        val imageInitializer = ImageInitializer()
+        imageInitializer.initialize()
     }
 
     @Test

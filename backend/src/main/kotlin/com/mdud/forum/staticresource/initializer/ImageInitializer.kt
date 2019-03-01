@@ -10,7 +10,7 @@ class ImageInitializer : BaseInitializer() {
     private val logger = LoggerFactory.getLogger(ImageInitializer::class.java)
 
     override fun initialize() {
-        val userImageDir = File("${Variables.staticResourcesDir}/${StaticResourceType.USER.name.toLowerCase()}")
+        val userImageDir = File("${Variables.staticResourcesDir}/${StaticResourceType.IMAGE.name.toLowerCase()}")
         userImageDir.takeIf { !it.exists() }?.apply {
             userImageDir.mkdirs()
             logger.info("user image directory created")

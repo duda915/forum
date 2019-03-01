@@ -24,9 +24,9 @@ class StaticResourceServiceImplTest {
         val bytes = "test".toByteArray()
         Mockito.`when`(staticResourceRepository.save(ArgumentMatchers.any(StaticResource::class.java))).then { it.getArgument(0) }
 
-        val link = staticResourceServiceImpl.addStaticResource(StaticResourceType.USER, bytes)
+        val link = staticResourceServiceImpl.addStaticResource(StaticResourceType.IMAGE, bytes)
 
-        assertThat(link.resourceLink, CoreMatchers.containsString("${Variables.staticEndpoint}/user"))
+        assertThat(link.resourceLink, CoreMatchers.containsString("${Variables.staticEndpoint}/image"))
         verify(staticResourceRepository, times(1)).save(ArgumentMatchers.any(StaticResource::class.java))
     }
 

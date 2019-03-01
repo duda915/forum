@@ -14,7 +14,7 @@ class User(
         password: String = "",
 
         @Column(name = "image")
-        var image: String = "",
+        var image: String? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
         @JoinColumn(name = "forum_user_id")
@@ -50,7 +50,7 @@ class User(
 
     override fun hashCode(): Int {
         var result = username.hashCode()
-        result = 31 * result + image.hashCode()
+        result = 31 * result + (image?.hashCode() ?: 0)
         result = 31 * result + authorities.hashCode()
         result = 31 * result + (id?.hashCode() ?: 0)
         return result

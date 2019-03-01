@@ -14,8 +14,8 @@ class StaticResourcePath(
     }
 
     companion object {
-        fun createFromLink(staticResourceLink: StaticResourceLink): StaticResourcePath {
-            val resourcePath = staticResourceLink.resourceLink.takeIf { it.contains("${Variables.staticEndpoint}/") }
+        fun createFromString(resourceLink: String): StaticResourcePath {
+            val resourcePath = resourceLink.takeIf { it.contains("${Variables.staticEndpoint}/") }
                     ?.removePrefix("${Variables.staticEndpoint}/")
                     ?: throw IllegalArgumentException("not an endpoint")
 

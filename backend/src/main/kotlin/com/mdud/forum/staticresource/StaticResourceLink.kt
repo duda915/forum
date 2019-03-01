@@ -33,15 +33,3 @@ class StaticResourceLink(
 
 
 }
-
-@Converter
-class StaticResourceLinkToStringConverter : AttributeConverter<StaticResourceLink, String> {
-    override fun convertToDatabaseColumn(p0: StaticResourceLink?): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun convertToEntityAttribute(p0: String?): StaticResourceLink {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-}

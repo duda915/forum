@@ -5,26 +5,40 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import java.lang.IllegalArgumentException
 
 @RunWith(SpringJUnit4ClassRunner::class)
 class StaticResourcePathTest {
 
     @Test
-    fun createFromLink_InsertValidFileName_ShouldCreatePath() {
-        val staticResourcePath = StaticResourcePath("test", StaticResourceType.USER)
-        val staticResourceLink = StaticResourceLink(staticResourcePath)
+    fun createFromString_ValidString_ShouldCreatePath() {
+        val resource = "${Variables.staticEndpoint}/${StaticResourceType.IMAGE}/test"
 
-        val created = StaticResourcePath.createFromLink(staticResourceLink)
+        val created = StaticResourcePath.createFromString(resource)
 
-        Assert.assertEquals(staticResourcePath, created)
+        val expected = StaticResourcePath("test", StaticResourceType.IMAGE)
+
+        Assert.assertEquals(expected, created)
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun createFromLink_InsertInvalidFileName_ShouldThrowException() {
-        val staticResourcePath = StaticResourcePath("", StaticResourceType.USER)
-        val staticResourceLink = StaticResourceLink(staticResourcePath)
+    fun createFromString_CreateFromInvalidEndPoint_ShouldThrowException() {
+        val resource = "invalid/${StaticResourceType.IMAGE}/test"
 
-        StaticResourcePath.createFromLink(staticResourceLink)
+        StaticResourcePath.createFromString(resource)
     }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun createFromString_CreateFromInvalidResourceType_ShouldThrowException() {
+        val resource = "${Variables.staticEndpoint}/invalid/test"
+
+        StaticResourcePath.createFromString(resource)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun createFromString_CreateFromInvalidFileName_ShouldThrowException() {
+        val resource = "${Variables.staticEndpoint}/${StaticResourceType.IMAGE}/"
+
+        StaticResourcePath.createFromString(resource)
+    }
+
 }
