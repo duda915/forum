@@ -1,4 +1,4 @@
-package com.mdud.forum.staticresource
+package com.mdud.forum.staticresource.util
 
 import com.mdud.forum.configuration.Variables
 import java.nio.file.Path
@@ -6,7 +6,7 @@ import java.nio.file.Paths
 
 class StaticResourcePath (
         private val variables: Variables,
-        private val staticResourceRelativePath:String
+        val staticResourceRelativePath:String
 ) {
     fun getAbsolutePath(): Path {
         return Paths.get("${variables.staticResourcesDir}/$staticResourceRelativePath")

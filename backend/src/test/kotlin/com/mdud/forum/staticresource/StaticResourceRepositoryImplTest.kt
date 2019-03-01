@@ -2,6 +2,7 @@ package com.mdud.forum.staticresource
 
 import com.mdud.forum.configuration.Variables
 import com.mdud.forum.configuration.VariablesConfiguration
+import com.mdud.forum.staticresource.util.StaticResourcePath
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -9,7 +10,6 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import java.nio.file.Paths
 
 @RunWith(SpringJUnit4ClassRunner::class)
 @ContextConfiguration(
@@ -41,6 +41,11 @@ class StaticResourceRepositoryImplTest {
         val newResource = staticResourceRepository.save(staticResource)
 
         assertTrue(newResource.staticResourcePath.getAbsolutePath().toFile().exists())
+    }
+
+    @Test(expected = NullPointerException::class)
+    fun save_SaveNullResource_ShouldThrowException() {
+        staticResourceRepository.save(null)
     }
 
     @Test

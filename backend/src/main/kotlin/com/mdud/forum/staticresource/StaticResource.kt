@@ -1,5 +1,7 @@
 package com.mdud.forum.staticresource
 
+import com.mdud.forum.staticresource.util.StaticResourcePath
+
 class StaticResource (
         val staticResourcePath: StaticResourcePath,
         val content: ByteArray

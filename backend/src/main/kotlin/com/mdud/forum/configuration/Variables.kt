@@ -3,7 +3,7 @@ package com.mdud.forum.configuration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-class Variables {
+open class Variables {
 
     val staticResourcesDir: String = "${System.getProperty("user.home")}/forum"
     val userImagesResourceDir = "user"

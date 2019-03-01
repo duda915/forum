@@ -1,7 +1,7 @@
 package com.mdud.forum.staticresource
 
+import com.mdud.forum.staticresource.util.StaticResourcePath
 import java.nio.file.Files
-import java.nio.file.Path
 
 class StaticResourceRepositoryImpl : StaticResourceRepository {
     override fun delete(staticResource: StaticResource) {
@@ -15,8 +15,8 @@ class StaticResourceRepositoryImpl : StaticResourceRepository {
         return StaticResource(staticResourcePath, file.readBytes())
     }
 
-    override fun save(staticResource: StaticResource): StaticResource {
-        Files.write(staticResource.staticResourcePath.getAbsolutePath(), staticResource.content)
+    override fun save(staticResource: StaticResource?): StaticResource {
+        Files.write(staticResource!!.staticResourcePath.getAbsolutePath(), staticResource.content)
         return findByPath(staticResource.staticResourcePath)
     }
 }
