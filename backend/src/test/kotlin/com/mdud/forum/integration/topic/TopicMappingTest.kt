@@ -48,6 +48,7 @@ class TopicMappingTest {
         val topic = Topic(adminUser, "NewTopic", posts)
         val newTopic = topicRepository.save(topic)
 
+        //multiple asserts because mappings are rarely changed
         assertNotNull(newTopic.id)
         assertThat(newTopic.posts.map { it.id }, CoreMatchers.everyItem(notNullValue()))
         assertEquals(4, newTopic.posts.size)
