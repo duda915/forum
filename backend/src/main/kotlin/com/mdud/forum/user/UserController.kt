@@ -3,6 +3,7 @@ package com.mdud.forum.user
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import java.security.Principal
 import javax.validation.Valid
 
@@ -32,5 +33,10 @@ class UserController @Autowired constructor(
     fun changePassword(principal: Principal, @RequestBody @Valid passwordDTO: PasswordDTO) {
         val userDTO = UserDTO(principal.name, passwordDTO.password)
         userService.changePassword(userDTO)
+    }
+
+    @PutMapping
+    fun changeUserImage(principal: Principal, @RequestParam("file") multipartFile: MultipartFile) {
+        TODO("static resource service is not implemented")
     }
 }
