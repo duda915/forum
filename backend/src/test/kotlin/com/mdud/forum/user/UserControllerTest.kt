@@ -3,7 +3,6 @@ package com.mdud.forum.user
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mdud.forum.user.authority.Authority
 import com.mdud.forum.user.authority.UserAuthority
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,10 +12,8 @@ import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 import org.springframework.http.MediaType
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -88,4 +85,64 @@ class UserControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isBadRequest)
     }
+
+    @Test
+    fun removeUser() {
+        mockMvc.perform(delete("$controllerEndpoint/test"))
+                .andExpect(status().isOk)
+
+        verify(userService, times(1)).removeUser("test")
+    }
+
+    @Test
+    fun changePassword_ValidPassword_ShouldChangePassword() {
+        val principal = Principal { "user" }
+        val passwordDTO = PasswordDTO("newpass")
+
+        val json = objectMapper.writeValueAsString(passwordDTO)
+
+        mockMvc.perform(post(controllerEndpoint)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andExpect(status().isOk)
+
+        val expectedParam = UserDTO("user", passwordDTO.password)
+        verify(userService, times(1)).changePassword(expectedParam)
+    }
+
+    @Test
+    fun changePassword_InvalidPassword_ShouldReturn404() {
+        val principal = Principal { "user" }
+        val passwordDTO = PasswordDTO("")
+
+        val json = objectMapper.writeValueAsString(passwordDTO)
+
+        mockMvc.perform(post(controllerEndpoint)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andExpect(status().isBadRequest)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

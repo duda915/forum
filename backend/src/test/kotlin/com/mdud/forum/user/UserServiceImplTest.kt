@@ -74,7 +74,9 @@ class UserServiceImplTest {
         `when`(userRepository.findUserByUsername("username")).thenReturn(Optional.of(user))
         `when`(userRepository.save(ArgumentMatchers.any(User::class.java))).then { it.getArgument(0) }
 
-        val changedUser = userServiceImpl.changePassword(user.username, "newpassword")
+        val userDTO = UserDTO(user.username, "newpassword")
+
+        val changedUser = userServiceImpl.changePassword(userDTO)
 
         assertTrue(PasswordEncoder.getInstance.matches("newpassword", changedUser.password))
         verify(userRepository, times(1)).save(changedUser)

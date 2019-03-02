@@ -23,9 +23,9 @@ class UserServiceImpl @Autowired constructor(
         userRepository.delete(user)
     }
 
-    override fun changePassword(username: String, newPassword: String): User {
-        val user = getUser(username)
-        user.password = newPassword
+    override fun changePassword(userDTO: UserDTO): User {
+        val user = getUser(userDTO.username)
+        user.password = userDTO.password
         return userRepository.save(user)
     }
 
