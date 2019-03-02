@@ -1,7 +1,10 @@
 package com.mdud.forum.user
 
-class UserDTO (
+import javax.validation.constraints.NotEmpty
+
+data class UserDTO (
+        @get:NotEmpty
     val username: String,
-    val password: String,
-    val image: String
+        @get:NotEmpty
+    val password: String
 )

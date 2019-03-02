@@ -32,7 +32,7 @@ class User(
         }
 
     constructor(userDTO: UserDTO)
-            : this(userDTO.username, userDTO.password, userDTO.image, mutableSetOf(UserAuthority(Authority.USER)))
+            : this(userDTO.username, userDTO.password, null, mutableSetOf(UserAuthority(Authority.USER)))
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -55,7 +55,6 @@ class User(
         result = 31 * result + (id?.hashCode() ?: 0)
         return result
     }
-
 
 }
 

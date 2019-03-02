@@ -50,7 +50,7 @@ class UserServiceImplTest {
 
     @Test
     fun addUser() {
-        val userDTO = UserDTO("username", "password", "image")
+        val userDTO = UserDTO("username", "password")
         val user = User(userDTO)
         `when`(userRepository.save(ArgumentMatchers.any(User::class.java))).then { it.getArgument(0) }
 
@@ -82,7 +82,7 @@ class UserServiceImplTest {
 
     @Test
     fun setAuthorities() {
-        val userDTO = UserDTO("username", "password", "image")
+        val userDTO = UserDTO("username", "password")
         val user = User(userDTO)
         `when`(userRepository.findUserByUsername("username")).thenReturn(Optional.of(user))
         `when`(userRepository.save(ArgumentMatchers.any(User::class.java))).then { it.getArgument(0) }

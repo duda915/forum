@@ -21,7 +21,7 @@ class UserInitializer constructor(
         try {
             userService.getUser("admin")
         } catch (e: NoSuchElementException) {
-            val userDTO = UserDTO("admin", "admin", "admin")
+            val userDTO = UserDTO("admin", "admin")
 
             userService.addUser(userDTO)
             userService.setAuthorities("admin", Authority.values().map { UserAuthority(it) }.toHashSet())
@@ -33,7 +33,7 @@ class UserInitializer constructor(
         try {
             userService.getUser("moderator")
         } catch (e: NoSuchElementException) {
-            val userDTO = UserDTO("moderator", "moderator", "moderator")
+            val userDTO = UserDTO("moderator", "moderator")
             val moderatorAuthoritySet = mutableSetOf(UserAuthority(Authority.USER), UserAuthority(Authority.MODERATOR))
 
             userService.addUser(userDTO)
@@ -47,7 +47,7 @@ class UserInitializer constructor(
             userService.getUser("user")
 
         } catch (e : NoSuchElementException) {
-            val userDTO = UserDTO("user", "user", "user")
+            val userDTO = UserDTO("user", "user")
 
             userService.addUser(userDTO)
             logger.info("default user initialized")
