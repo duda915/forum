@@ -1,5 +1,6 @@
 package com.mdud.forum.configuration
 
+import com.mdud.forum.user.PasswordEncoder
 import com.mdud.forum.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.authority.SimpleGrantedAuthority

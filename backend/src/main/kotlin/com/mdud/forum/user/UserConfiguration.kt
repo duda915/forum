@@ -12,4 +12,9 @@ class UserConfiguration @Autowired constructor(
     fun userInitializer() : UserInitializer {
         return UserInitializer(userService)
     }
+
+    @Bean
+    fun passwordEncoder(): org.springframework.security.crypto.password.PasswordEncoder {
+        return PasswordEncoder.getInstance
+    }
 }
