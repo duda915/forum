@@ -3,8 +3,7 @@ package com.mdud.forum.exception
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 
-@ResponseStatus(HttpStatus.FORBIDDEN)
-class AccessDeniedException(
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+class FileTypeException(
         message: String
 ) : RuntimeException(message)
-
