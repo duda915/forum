@@ -1,5 +1,8 @@
 package com.mdud.forum.user
 
+import com.mdud.forum.staticresource.StaticResourceLink
+import com.mdud.forum.staticresource.StaticResourcePath
+import com.mdud.forum.staticresource.StaticResourceType
 import com.mdud.forum.user.authority.Authority
 import com.mdud.forum.user.authority.UserAuthority
 import org.junit.Assert.assertEquals
@@ -97,5 +100,17 @@ class UserServiceImplTest {
         expectedUser.authorities = newAuthorities
         assertEquals(expectedUser, grantedUser)
         verify(userRepository, times(1)).save(expectedUser)
+    }
+
+    @Test
+    fun changeUserImage() {
+        `when`(userRepository.findUserByUsername("user")).thenReturn(Optional.of(user))
+        `when`(userRepository.save(ArgumentMatchers.any(User::class.java))).then { it.getArgument(0) }
+
+        val resourceLink = StaticResourceLink(StaticResourcePath("file", StaticResourceType.IMAGE))
+        val newUserImage = userServiceImpl.changeUserImage("user", resourceLink)
+
+        assertEquals(resourceLink.resourceLink, newUserImage.image)
+        verify(userRepository, times(1)).save(newUserImage)
     }
 }

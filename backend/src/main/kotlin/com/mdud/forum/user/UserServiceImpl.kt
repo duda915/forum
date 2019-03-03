@@ -1,5 +1,6 @@
 package com.mdud.forum.user
 
+import com.mdud.forum.staticresource.StaticResourceLink
 import com.mdud.forum.user.authority.UserAuthority
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -32,6 +33,12 @@ class UserServiceImpl @Autowired constructor(
     override fun setAuthorities(username: String, authorities: MutableSet<UserAuthority>): User {
         val user = getUser(username)
         user.authorities = authorities
+        return userRepository.save(user)
+    }
+
+    override fun changeUserImage(username: String, staticResourceLink: StaticResourceLink): User {
+        val user = getUser(username)
+        user.image = staticResourceLink.resourceLink
         return userRepository.save(user)
     }
 }
