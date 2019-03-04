@@ -28,7 +28,7 @@ class SecurityConfig @Autowired constructor(
 
     override fun configure(http: HttpSecurity?) {
         http?.authorizeRequests()?.anyRequest()?.authenticated()
+                ?.and()?.authorizeRequests()?.antMatchers("/api/user/register")?.permitAll()
     }
-
-
+    
 }
