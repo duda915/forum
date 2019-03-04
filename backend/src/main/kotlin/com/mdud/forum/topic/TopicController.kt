@@ -7,6 +7,8 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
+//TODO validator
+
 @RestController
 @RequestMapping("/api/topic")
 class TopicController @Autowired constructor(
@@ -48,5 +50,19 @@ class TopicController @Autowired constructor(
     @DeleteMapping("/{topicId}/post/{postId}")
     fun removePost(@PathVariable("topicId") topicId: Long, @PathVariable("postId") postId: Long) {
         topicService.removePost(topicId, postId)
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    @PutMapping("/{topicId}")
+    fun editTopic(@PathVariable("topicId") topicId: Long, @RequestBody title: String): Topic {
+        return topicService.editTopic(topicId, title)
+    }
+
+    @PutMapping("/{topicId}/post/{postId}")
+    fun editPost(principal: Principal, @PathVariable("topicId") topicId: Long,
+                 @PathVariable("postId") postId: Long, @RequestBody postDTO: PostDTO): Post {
+        postDTO.poster = principal.name
+
+        return topicService.editPost(topicId, postId, postDTO)
     }
 }

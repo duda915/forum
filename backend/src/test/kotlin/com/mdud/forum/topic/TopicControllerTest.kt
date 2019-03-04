@@ -133,4 +133,40 @@ class TopicControllerTest {
 
         verify(topicService, times(1)).removePost(1, 1)
     }
+
+    @Test
+    fun editTopic() {
+        val newTitle = "newtitle"
+
+        `when`(topicService.editTopic(1, "newtitle")).thenReturn(Topic(User(), "newtitle"))
+
+        mockMvc.perform(put("$controllerEndpoint/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(newTitle.toByteArray()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.title", CoreMatchers.`is`("newtitle")))
+
+        verify(topicService, times(1)).editTopic(1, "newtitle")
+    }
+
+    @Test
+    fun editPost() {
+        val principal = Principal { "test" }
+        val postDTO = PostDTO("", "newcontent")
+        val json = objectMapper.writeValueAsString(postDTO)
+
+        val expectedPostDTO = PostDTO("test", postDTO.content)
+        `when`(topicService.editPost(1, 1, expectedPostDTO)).thenReturn(Post(User(), postDTO.content))
+
+        mockMvc.perform(put("$controllerEndpoint/1/post/1")
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.content", CoreMatchers.`is`(postDTO.content)))
+
+        verify(topicService, times(1)).editPost(1, 1, expectedPostDTO)
+    }
 }
