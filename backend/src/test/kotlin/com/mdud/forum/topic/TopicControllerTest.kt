@@ -8,7 +8,6 @@ import org.hamcrest.CoreMatchers
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -93,5 +92,28 @@ class TopicControllerTest {
                 .andExpect(jsonPath("$.posts[0].poster.username", CoreMatchers.`is`("principal")))
 
         verify(topicService, times(1)).addTopic(expectedDTO)
+    }
+
+    @Test
+    fun addPost() {
+        val principal = Principal { "principal" }
+        val postDTO = PostDTO("", "postcontent")
+        val json = objectMapper.writeValueAsString(postDTO)
+
+        val expectedPostDTO = PostDTO("principal", "postcontent")
+        `when`(topicService.addPost(1, expectedPostDTO)).thenAnswer {
+            val post = it.getArgument<PostDTO>(1)
+            Post(User(post.poster), post.content)
+        }
+
+        mockMvc.perform(post("$controllerEndpoint/1/post")
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.poster.username", CoreMatchers.`is`("principal")))
+
+        verify(topicService, times(1)).addPost(1, expectedPostDTO)
     }
 }

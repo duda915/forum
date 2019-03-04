@@ -1,6 +1,7 @@
 package com.mdud.forum.topic
 
 import com.mdud.forum.topic.post.Post
+import com.mdud.forum.topic.post.PostDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
@@ -27,5 +28,12 @@ class TopicController @Autowired constructor(
         topicDTO.posts.first().poster = principal.name
 
         return topicService.addTopic(topicDTO)
+    }
+
+    @PostMapping("/{topicId}/post")
+    fun addPost(principal: Principal, @PathVariable("topicId") topicId: Long, @RequestBody postDTO: PostDTO): Post {
+        postDTO.poster = principal.name
+
+        return topicService.addPost(topicId, postDTO)
     }
 }
