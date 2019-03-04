@@ -14,8 +14,7 @@ import org.mockito.Mockito.*
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -115,5 +114,23 @@ class TopicControllerTest {
                 .andExpect(jsonPath("$.poster.username", CoreMatchers.`is`("principal")))
 
         verify(topicService, times(1)).addPost(1, expectedPostDTO)
+    }
+
+    @Test
+    fun removeTopic() {
+        mockMvc.perform(delete("$controllerEndpoint/1"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+
+        verify(topicService, times(1)).removeTopic(1)
+    }
+
+    @Test
+    fun removePost() {
+        mockMvc.perform(delete("$controllerEndpoint/1/post/1"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+
+        verify(topicService, times(1)).removePost(1, 1)
     }
 }

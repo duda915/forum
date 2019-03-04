@@ -3,6 +3,7 @@ package com.mdud.forum.topic
 import com.mdud.forum.topic.post.Post
 import com.mdud.forum.topic.post.PostDTO
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
@@ -35,5 +36,17 @@ class TopicController @Autowired constructor(
         postDTO.poster = principal.name
 
         return topicService.addPost(topicId, postDTO)
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    @DeleteMapping("/{topicId}")
+    fun removeTopic(@PathVariable("topicId") topicId: Long) {
+        topicService.removeTopic(topicId)
+    }
+
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    @DeleteMapping("/{topicId}/post/{postId}")
+    fun removePost(@PathVariable("topicId") topicId: Long, @PathVariable("postId") postId: Long) {
+        topicService.removePost(topicId, postId)
     }
 }
