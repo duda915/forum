@@ -1,6 +1,6 @@
 package com.mdud.forum.topic.post
 
-class PostDTO (
-        val poster: String,
+data class PostDTO (
+        var poster: String,
         val content: String
 )
