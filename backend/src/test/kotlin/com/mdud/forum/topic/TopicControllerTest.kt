@@ -70,7 +70,7 @@ class TopicControllerTest {
     }
 
     @Test
-    fun addTopic() {
+    fun addTopic_AddValidTopic_ShouldAddValidTopic() {
         val principal = Principal { "principal" }
         val topicDTO = TopicDTO("", "newtopic", mutableListOf(PostDTO("", "test")))
         val json = objectMapper.writeValueAsString(topicDTO)
@@ -94,7 +94,35 @@ class TopicControllerTest {
     }
 
     @Test
-    fun addPost() {
+    fun addTopic_AddTopicWithInvalidTitle_ShouldReturnBadRequest() {
+        val principal = Principal { "principal" }
+        val topicDTO = TopicDTO("", "", mutableListOf(PostDTO("", "test")))
+        val json = objectMapper.writeValueAsString(topicDTO)
+
+        mockMvc.perform(post(controllerEndpoint)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun addTopic_AddTopicWithInvalidPostContent_ShouldReturnBadRequest() {
+        val principal = Principal { "principal" }
+        val topicDTO = TopicDTO("", "title", mutableListOf(PostDTO("", "")))
+        val json = objectMapper.writeValueAsString(topicDTO)
+
+        mockMvc.perform(post(controllerEndpoint)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun addPost_AddValidPost_ShouldReturnOk() {
         val principal = Principal { "principal" }
         val postDTO = PostDTO("", "postcontent")
         val json = objectMapper.writeValueAsString(postDTO)
@@ -117,6 +145,22 @@ class TopicControllerTest {
     }
 
     @Test
+    fun addPost_AddInvalidPost_ShouldReturnBadRequest() {
+        val principal = Principal { "principal" }
+        val postDTO = PostDTO("", "")
+        val json = objectMapper.writeValueAsString(postDTO)
+
+
+        mockMvc.perform(post("$controllerEndpoint/1/post")
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest)
+
+    }
+
+    @Test
     fun removeTopic() {
         mockMvc.perform(delete("$controllerEndpoint/1"))
                 .andDo(MockMvcResultHandlers.print())
@@ -135,7 +179,7 @@ class TopicControllerTest {
     }
 
     @Test
-    fun editTopic() {
+    fun editTopic_WithValidName_ShouldReturnOK() {
         val newTitle = "newtitle"
 
         `when`(topicService.editTopic(1, "newtitle")).thenReturn(Topic(User(), "newtitle"))
@@ -150,8 +194,20 @@ class TopicControllerTest {
         verify(topicService, times(1)).editTopic(1, "newtitle")
     }
 
+
     @Test
-    fun editPost() {
+    fun editTopic_WithInvalidName_ShouldReturnBadRequest() {
+        val newTitle = ""
+
+        mockMvc.perform(put("$controllerEndpoint/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(newTitle.toByteArray()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun editPost_EditPostWithValidContent_ShouldReturnOK() {
         val principal = Principal { "test" }
         val postDTO = PostDTO("", "newcontent")
         val json = objectMapper.writeValueAsString(postDTO)
@@ -168,5 +224,20 @@ class TopicControllerTest {
                 .andExpect(jsonPath("$.content", CoreMatchers.`is`(postDTO.content)))
 
         verify(topicService, times(1)).editPost(1, 1, expectedPostDTO)
+    }
+
+
+    @Test
+    fun editPost_EditPostWithInvalidContent_ShouldReturnBadRequest() {
+        val principal = Principal { "test" }
+        val postDTO = PostDTO("", "")
+        val json = objectMapper.writeValueAsString(postDTO)
+
+        mockMvc.perform(put("$controllerEndpoint/1/post/1")
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest)
     }
 }

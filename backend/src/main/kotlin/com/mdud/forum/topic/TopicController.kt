@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
-
-//TODO validator
+import javax.validation.Valid
+import javax.validation.constraints.NotEmpty
 
 @RestController
 @RequestMapping("/api/topic")
@@ -26,7 +26,7 @@ class TopicController @Autowired constructor(
     }
 
     @PostMapping
-    fun addTopic(principal: Principal, @RequestBody topicDTO: TopicDTO): Topic {
+    fun addTopic(principal: Principal, @RequestBody @Valid topicDTO: TopicDTO): Topic {
         topicDTO.originalPoster = principal.name
         topicDTO.posts.first().poster = principal.name
 
@@ -34,7 +34,7 @@ class TopicController @Autowired constructor(
     }
 
     @PostMapping("/{topicId}/post")
-    fun addPost(principal: Principal, @PathVariable("topicId") topicId: Long, @RequestBody postDTO: PostDTO): Post {
+    fun addPost(principal: Principal, @PathVariable("topicId") topicId: Long, @RequestBody @Valid postDTO: PostDTO): Post {
         postDTO.poster = principal.name
 
         return topicService.addPost(topicId, postDTO)
@@ -54,13 +54,13 @@ class TopicController @Autowired constructor(
 
     @PreAuthorize("hasAuthority('MODERATOR')")
     @PutMapping("/{topicId}")
-    fun editTopic(@PathVariable("topicId") topicId: Long, @RequestBody title: String): Topic {
+    fun editTopic(@PathVariable("topicId") topicId: Long, @RequestBody @NotEmpty title: String): Topic {
         return topicService.editTopic(topicId, title)
     }
 
     @PutMapping("/{topicId}/post/{postId}")
     fun editPost(principal: Principal, @PathVariable("topicId") topicId: Long,
-                 @PathVariable("postId") postId: Long, @RequestBody postDTO: PostDTO): Post {
+                 @PathVariable("postId") postId: Long, @RequestBody @Valid postDTO: PostDTO): Post {
         postDTO.poster = principal.name
 
         return topicService.editPost(topicId, postId, postDTO)
