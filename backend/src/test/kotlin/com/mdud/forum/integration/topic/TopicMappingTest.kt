@@ -14,13 +14,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.annotation.IfProfileValue
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.transaction.annotation.Transactional
 
 @RunWith(SpringJUnit4ClassRunner::class)
 @SpringBootTest
 @Transactional
-@Ignore("rerun if post or topic mappings change")
+@Ignore("run when mappings change")
 class TopicMappingTest {
 
     @Autowired
