@@ -1,5 +1,6 @@
 package com.mdud.forum.integration.user
 
+import com.mdud.forum.integration.IntegrationProfileValueSource
 import com.mdud.forum.integration.TokenTestHelper
 import org.hamcrest.CoreMatchers
 import org.junit.Ignore
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.IfProfileValue
+import org.springframework.test.annotation.ProfileValueSourceConfiguration
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@ProfileValueSourceConfiguration(value = IntegrationProfileValueSource::class)
+@IfProfileValue(name = "integration", value = "true")
 class UserControllerIntegrationTest {
 
     @Autowired

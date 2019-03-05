@@ -1,5 +1,6 @@
 package com.mdud.forum.integration.topic
 
+import com.mdud.forum.integration.IntegrationProfileValueSource
 import com.mdud.forum.topic.Topic
 import com.mdud.forum.topic.TopicRepository
 import com.mdud.forum.topic.post.Post
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.IfProfileValue
+import org.springframework.test.annotation.ProfileValueSourceConfiguration
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.transaction.annotation.Transactional
@@ -22,7 +24,8 @@ import org.springframework.transaction.annotation.Transactional
 @RunWith(SpringJUnit4ClassRunner::class)
 @SpringBootTest
 @Transactional
-@Ignore("run when mappings change")
+@ProfileValueSourceConfiguration(value = IntegrationProfileValueSource::class)
+@IfProfileValue(name = "integration", value = "true")
 class TopicMappingTest {
 
     @Autowired
