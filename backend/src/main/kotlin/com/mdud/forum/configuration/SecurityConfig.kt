@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +29,14 @@ class SecurityConfig @Autowired constructor(
 
     override fun configure(http: HttpSecurity?) {
         http?.authorizeRequests()?.anyRequest()?.authenticated()
-                ?.and()?.authorizeRequests()?.antMatchers("/api/user/register")?.permitAll()
     }
-    
+
+}
+
+@Configuration
+class ResourceServerConfiguration : ResourceServerConfigurerAdapter() {
+    override fun configure(http: HttpSecurity?) {
+        http?.authorizeRequests()?.antMatchers("/api/user/register")?.permitAll()
+                ?.anyRequest()?.authenticated()
+    }
 }
