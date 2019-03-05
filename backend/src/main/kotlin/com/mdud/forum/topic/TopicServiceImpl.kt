@@ -14,6 +14,10 @@ class TopicServiceImpl @Autowired constructor(
         private val userService: UserService
 ) : TopicService {
 
+    override fun getAllTopics(): List<Topic> {
+        return topicRepository.findAll().toList()
+    }
+
     override fun getTopic(id: Long): Topic {
         return topicRepository.findById(id).orElseThrow()
     }

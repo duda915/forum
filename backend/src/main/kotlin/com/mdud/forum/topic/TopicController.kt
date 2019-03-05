@@ -15,6 +15,11 @@ class TopicController @Autowired constructor(
         private val topicService: TopicService
 ) {
 
+    @GetMapping
+    fun getAllTopics(): List<Topic> {
+        return topicService.getAllTopics()
+    }
+
     @GetMapping("/{topicId}")
     fun getTopic(@PathVariable("topicId") topicId: Long): Topic {
         return topicService.getTopic(topicId)

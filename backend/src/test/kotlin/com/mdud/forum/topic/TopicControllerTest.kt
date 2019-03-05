@@ -46,6 +46,16 @@ class TopicControllerTest {
     }
 
     @Test
+    fun getAllTopic() {
+        `when`(topicService.getAllTopics()).thenReturn(mutableListOf(topic))
+
+        mockMvc.perform(get(controllerEndpoint))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$[0].title", CoreMatchers.`is`("topic")))
+    }
+
+    @Test
     fun getTopic() {
         `when`(topicService.getTopic(1L)).thenReturn(topic)
 

@@ -48,6 +48,14 @@ class TopicServiceImplTest {
         topic = Topic(user, "title", mutableListOf(firstPost, secondPost))
     }
 
+    @Test
+    fun getAllTopics() {
+        `when`(topicRepository.findAll()).thenReturn(mutableListOf())
+        topicServiceImpl.getAllTopics()
+
+        verify(topicRepository, times(1)).findAll()
+    }
+
     @Test(expected = NoSuchElementException::class)
     fun getTopic_GetNonExistentTopic_ShouldThrowException() {
         `when`(topicRepository.findById(1L)).thenReturn(Optional.empty())

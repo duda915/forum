@@ -4,6 +4,7 @@ import com.mdud.forum.topic.post.Post
 import com.mdud.forum.topic.post.PostDTO
 
 interface TopicService {
+    fun getAllTopics(): List<Topic>
     fun getTopic(id: Long): Topic
     fun getPost(topicId: Long, postId: Long): Post
     fun addTopic(topic: TopicDTO): Topic
